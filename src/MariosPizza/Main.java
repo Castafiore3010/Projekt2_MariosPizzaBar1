@@ -101,11 +101,7 @@ public class Main {
                     finishedOrders.clear();
 
                     statistics.run();
-
-
                     break;
-
-
                 case 9:
                     return;
 
