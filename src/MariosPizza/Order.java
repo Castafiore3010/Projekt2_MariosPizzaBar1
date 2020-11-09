@@ -21,10 +21,6 @@ public class Order {
         super();
     }
 
-    public Order(LocalTime time, ArrayList<Pizza> pizzas) {
-        this.time = time;
-        this.pizzas = pizzas;
-    }
 
 
     public Order(LocalTime time, LocalTime pickUptime, ArrayList<Pizza> pizzas, double totalPrice ) {
@@ -35,6 +31,8 @@ public class Order {
     }
 
 
+
+    public ArrayList<Pizza> getPizzas() { return pizzas; }
 
     public double getTotalPrice() {
         return totalPrice;

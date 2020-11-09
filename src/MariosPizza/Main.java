@@ -2,15 +2,18 @@ package MariosPizza;
 
 import Menu.GeneriskMenu;
 import Tools.PizzaReader;
+import Tools.Statistics;
 
+import java.io.File;
 import java.time.LocalTime;
 import java.util.*;
 
 public class Main {
     private ArrayList<Order> pizzaQueue = new ArrayList<>();
+    private ArrayList<Order> finishedOrders = new ArrayList<>();
 
 
-    public void sortAfterPickUpTime() {
+    void sortAfterPickUpTime() {
         for (int i = 1; i < pizzaQueue.size(); i++) {
             for (int j = 0; j < pizzaQueue.size(); j++) {
                 Order temp = pizzaQueue.get(j);
@@ -34,9 +37,10 @@ public class Main {
 
     void orderAdder() {
         Order order = new Order();
+        new PizzaReader().printMenu();
         ArrayList<Pizza> pizzas = order.inputOrder();
         LocalTime timeNow = LocalTime.now();
-        double totalPriceOrder = new Order(timeNow, pizzas).totalPrice();
+        double totalPriceOrder = order.totalPrice();
         LocalTime pickUpTime = timeNow.plusMinutes(60);
         System.out.println("Er ordren bestilt i butikken? (y/n)");
         String orderInStore = new Scanner(System.in).nextLine();
@@ -49,10 +53,14 @@ public class Main {
     void run() {
         GeneriskMenu menu = new GeneriskMenu("Marios PizzaBar", "Vælg menupunkt: ",
                 new String[]{"1. Se menukort", "2. Indtast bestilling", "3. Vis bestillingskø",
-                        "4. Næste ordre", "5. Færdiggør ordre",  "9. Exit"});
-        boolean run = true;
+                        "4. Næste ordre", "5. Færdiggør ordre", "6. Statistik menu",  "9. Exit"});
 
-        while (run) {
+
+
+
+
+
+        while (true) {
 
             menu.printGeneriskMenu();
             int choice = menu.readChoice();
@@ -76,16 +84,29 @@ public class Main {
                     sortAfterPickUpTime();
                     System.out.println("Afslut næste ordre i køen? (y/n)");
                     String brugerSvar = new Scanner(System.in).nextLine();
+
+                    int i = 0;
                     if (brugerSvar.equalsIgnoreCase("y")) {
-                        if (pizzaQueue.size() > 0)  {
-                            pizzaQueue.remove(0);
+                        if (pizzaQueue.size() > i)  {
+                            finishedOrders.add(pizzaQueue.get(i));
+                            pizzaQueue.remove(i);
                             break;
                         }
                     }
                     break;
+                case 6:
+                    Statistics statistics = new Statistics(finishedOrders);
+                    statistics.writeToRevenue();
+                    statistics.writeToPizzasByName();
+                    finishedOrders.clear();
+
+                    statistics.run();
+
+
+                    break;
+
 
                 case 9:
-                    run = false;
                     return;
 
             }

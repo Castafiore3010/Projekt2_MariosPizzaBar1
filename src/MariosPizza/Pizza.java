@@ -12,6 +12,10 @@ public class Pizza {
 
 
 
+    public Pizza(String name, String number) {
+        this.name = name;
+        this.numOfPizza = Integer.parseInt(number);
+    }
     public Pizza(String name, String[] ingredients, double price) {
         this.name = name;
         this.ingredients = ingredients;
@@ -36,6 +40,8 @@ public class Pizza {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public void setNumOfPizza(int numOfPizza) {this.numOfPizza = numOfPizza; }
 
     public int getNumOfPizza() { return numOfPizza;}
 
