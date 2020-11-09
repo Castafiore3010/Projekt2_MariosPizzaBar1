@@ -29,7 +29,7 @@ public class Statistics {
     public void run() {
         GeneriskMenu menu = new GeneriskMenu("Statistik for Marios PizzaBar", "Vælg menupunkt: ",
                 new String[]{"1. Samlet omsætning", "2. Top 3 mest solgte", "3. Omsætning pr pizza",
-                        "4. Næste ordre", "5. Færdiggør ordre", "6. Statistik menu",  "9. Returnér til hovedmenu"});
+                        "9. Returnér til hovedmenu"});
 
         while (true) {
 
@@ -46,13 +46,6 @@ public class Statistics {
                 case 3:
                     mostSoldByRevenue();
                     break;
-
-                case 4:
-
-                case 5:
-
-                case 6:
-
 
                 case 9:
                     return;
@@ -247,7 +240,7 @@ public class Statistics {
         try {
             fileReader = new Scanner(accumRevenue);
             while (fileReader.hasNext()) {
-               double sumHelp = Double.parseDouble(fileReader.nextLine());
+                double sumHelp= Double.parseDouble(fileReader.nextLine());
                sum += sumHelp;
             }
         } catch (FileNotFoundException e) {

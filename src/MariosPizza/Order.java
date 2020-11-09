@@ -76,8 +76,12 @@ public class Order {
                 name = in.nextLine();
             }
             System.out.println("Antal af denne pizza?");
-            int antal = in.nextInt();
+            while (!in.hasNextInt()) {
+                System.out.println("Indtast venligst et heltal:");
+                in.nextLine();
 
+            }
+            int antal = in.nextInt();
             int pizzaNr = new PizzaReader().searchForPizza(name);
             double price = pizzas.get(pizzaNr).getPrice();
 
