@@ -4,7 +4,7 @@ import Menu.GeneriskMenu;
 import Tools.PizzaReader;
 import Tools.Statistics;
 
-import java.io.File;
+
 import java.time.LocalTime;
 import java.util.*;
 
@@ -13,6 +13,7 @@ public class Main {
     private ArrayList<Order> finishedOrders = new ArrayList<>();
 
 
+    // Sorterer pizzakøen efter afhentningstidspunkt - tidligste først.
     void sortAfterPickUpTime() {
         for (int i = 1; i < pizzaQueue.size(); i++) {
             for (int j = 0; j < pizzaQueue.size(); j++) {
@@ -27,6 +28,7 @@ public class Main {
         }
     }
 
+    // Viser næste ordre i pizzakøen
     void nextOrder() {
         sortAfterPickUpTime();
         if (pizzaQueue.size() < 1) {
@@ -35,6 +37,7 @@ public class Main {
             pizzaQueue.get(0).showOrder();
     }
 
+    // Hjælpe metode til tilføjelse af ordrer til pizzakøen.
     void orderAdder() {
         Order order = new Order();
         new PizzaReader().printMenu();
@@ -44,21 +47,21 @@ public class Main {
         LocalTime pickUpTime = timeNow.plusMinutes(60);
         System.out.println("Er ordren bestilt i butikken? (y/n)");
         String orderInStore = new Scanner(System.in).nextLine();
+        while (!orderInStore.equalsIgnoreCase("y") && !orderInStore.equalsIgnoreCase("n")) {
+            System.out.println("Indtast venligst y eller n:");
+            orderInStore = new Scanner(System.in).nextLine();
+        }
         if (orderInStore.equalsIgnoreCase("y"))
             pickUpTime = timeNow.plusMinutes(15);
         pizzaQueue.add(new Order(timeNow, pickUpTime, pizzas, totalPriceOrder));
 
     }
 
+    // Run metode der opretter menu, og håndterer brugerinput vha. Switch.
     void run() {
         GeneriskMenu menu = new GeneriskMenu("Marios PizzaBar", "Vælg menupunkt: ",
                 new String[]{"1. Se menukort", "2. Indtast bestilling", "3. Vis bestillingskø",
                         "4. Næste ordre", "5. Færdiggør ordre", "6. Statistik menu",  "9. Exit"});
-
-
-
-
-
 
         while (true) {
 
@@ -82,11 +85,19 @@ public class Main {
                     break;
                 case 5:
                     sortAfterPickUpTime();
+                    if (pizzaQueue.size() < 1) {
+                        System.out.println("Ingen ordrer i køen");
+                        break;
+                    }
                     System.out.println("Afslut næste ordre i køen? (y/n)");
-                    String brugerSvar = new Scanner(System.in).nextLine();
+                    String userInput = new Scanner(System.in).nextLine();
+                    while (!userInput.equalsIgnoreCase("y") && !userInput.equalsIgnoreCase("n")) {
+                        System.out.println("Indtast venligst y eller n:");
+                        userInput = new Scanner(System.in).nextLine();
+                    }
 
                     int i = 0;
-                    if (brugerSvar.equalsIgnoreCase("y")) {
+                    if (userInput.equalsIgnoreCase("y")) {
                         if (pizzaQueue.size() > i)  {
                             finishedOrders.add(pizzaQueue.get(i));
                             pizzaQueue.remove(i);
@@ -103,6 +114,10 @@ public class Main {
                     statistics.run();
                     break;
                 case 9:
+                    Statistics statistics2 = new Statistics(finishedOrders);
+                    statistics2.writeToRevenue();
+                    statistics2.writeToPizzasByName();
+                    finishedOrders.clear();
                     return;
 
             }

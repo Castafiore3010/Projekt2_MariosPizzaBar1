@@ -2,7 +2,6 @@ package MariosPizza;
 
 import Tools.PizzaReader;
 
-import java.lang.reflect.Array;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -16,12 +15,10 @@ public class Order {
     private double totalPrice;
 
 
-
+    // Konstruktører
     public Order() {
         super();
     }
-
-
 
     public Order(LocalTime time, LocalTime pickUptime, ArrayList<Pizza> pizzas, double totalPrice ) {
         this.time = time;
@@ -30,19 +27,18 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-
-
+    // Relevante gettere og settere
     public ArrayList<Pizza> getPizzas() { return pizzas; }
 
     public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public LocalTime getPickUptime() {
+        return pickUptime;
     }
 
-
+    // Vis  Order objekt som print.
     public void showOrder() {
         String timeFormat = time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
         String timeFormat2 = pickUptime.format((DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)));
@@ -62,7 +58,7 @@ public class Order {
         System.out.println("*******");
     }
 
-
+    // Metode til indtastning af pizze til ordreren.
     ArrayList<Pizza> inputOrder() {
         Scanner in = new Scanner(System.in);
         pizzas = new PizzaReader().loadMenu();
@@ -92,14 +88,18 @@ public class Order {
             in.nextLine();
             String orderDone = in.nextLine();
 
+            while (!orderDone.equalsIgnoreCase("y") && !orderDone.equalsIgnoreCase("n")) {
+                System.out.println("Indtast venligst y eller n:");
+                orderDone = in.nextLine();
+            }
+
             if (orderDone.equalsIgnoreCase("y")) {
                 return pizzas; 
             }
         }
     }
 
-
-
+    // Løb gennem pizzaArray og find total pris for odreren.
     double totalPrice() {
         double sum = 0.0;
         for (Pizza element : pizzas) {
@@ -108,15 +108,4 @@ public class Order {
         }
         return sum;
     }
-
-
-    public LocalTime getPickUptime() {
-        return pickUptime;
-    }
-
-    public void setPickUptime(LocalTime pickUptime) {
-        this.pickUptime = pickUptime;
-    }
-
-
 }

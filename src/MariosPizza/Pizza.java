@@ -1,17 +1,15 @@
 package MariosPizza;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
+
 
 public class Pizza {
     private String name;
     private String[] ingredients;
     private double price;
     private int numOfPizza;
-    private final int TIME_TO_MAKE_PIZZA = 15;
 
 
-
+    // Konstruktører
     public Pizza(String name, String number) {
         this.name = name;
         this.numOfPizza = Integer.parseInt(number);
@@ -28,23 +26,18 @@ public class Pizza {
         this.numOfPizza = numOfPizza;
     }
 
-
-    public String[] getIngredients() {return ingredients;}
-
+    // Relevante gettere og settere
     public String getName() {return name;}
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public void setNumOfPizza(int numOfPizza) {this.numOfPizza = numOfPizza; }
 
     public int getNumOfPizza() { return numOfPizza;}
 
+    // ToString metoder
     public String ingredientsToString() {
         String stringIngredients = "";
         for (int i = 0; i < ingredients.length; i++) {

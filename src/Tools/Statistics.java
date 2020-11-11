@@ -20,12 +20,15 @@ public class Statistics {
     private File accumRevenue;
     private File pizzasSoldByName;
 
-
+    // Konstruktører
+    public Statistics() {
+        super();
+    }
     public Statistics(ArrayList<Order> processedOrders) {
         this.processedOrders = processedOrders;
     }
 
-
+    // Run metode der håndterer stastistik menuen.
     public void run() {
         GeneriskMenu menu = new GeneriskMenu("Statistik for Marios PizzaBar", "Vælg menupunkt: ",
                 new String[]{"1. Samlet omsætning", "2. Top 3 mest solgte", "3. Omsætning pr pizza",
@@ -54,8 +57,7 @@ public class Statistics {
         }
     }
 
-    public ArrayList<String> getEarlierProcessedOrdersPizzaNames() { return earlierProcessedOrdersPizzaNames;}
-
+    // Indlæser total omsætning fra filen accumRevenue.txt
     public ArrayList<String> loadAccumRevenue() {
         try {
             fileReader = new Scanner(new File("accumRevenue.txt"));
@@ -69,6 +71,7 @@ public class Statistics {
     }
 
 
+    // Indlæser Pizza og antal af denne, og returnerer en ArrayList af strings.
     public ArrayList<String> loadPizzasByName() {
         try {
             fileReader = new Scanner(new File("pizzasByName.txt"));
@@ -82,7 +85,7 @@ public class Statistics {
 
     }
 
-
+    // Skriver pizza og antal af pizza til filen PizzasByName.txt
     public void writeToPizzasByName() {
         pizzasSoldByName = new File("pizzasByName.txt");
         earlierProcessedOrdersPizzaNames = loadPizzasByName();
@@ -110,8 +113,7 @@ public class Statistics {
     }
 
 
-
-
+    // Skriver omsætning pr ordre til filen accumRevenue.txt
     public void writeToRevenue() {
         accumRevenue = new File("accumRevenue.txt");
         earlierProcessedOrdersRevenue = loadAccumRevenue();
@@ -131,8 +133,7 @@ public class Statistics {
         }
     }
 
-
-
+    // Sorterer en given liste efter numOfSales
     public void sortAfterNumOfSales(ArrayList<Pizza> pizzas) {
         for (int i = 1; i < pizzas.size(); i++) {
             for (int j = 0; j < pizzas.size(); j++) {
@@ -146,7 +147,7 @@ public class Statistics {
         }
     }
 
-
+    // Modtager en liste af pizze, og en String - og returnerer antallet af salg af det givne pizzanavn.
     public int totalNumOfSales(ArrayList<Pizza> pizzas, String name) {
         int count = 0;
         for (Pizza element : pizzas) {
@@ -156,6 +157,7 @@ public class Statistics {
         return count;
     }
 
+    // Viser top 3 mest solgte pizze
     public void mostSold() {
         PizzaReader pizzaReader = new PizzaReader();
         ArrayList<Pizza> pizzaMenu = pizzaReader.loadMenu();
@@ -194,7 +196,9 @@ public class Statistics {
 
     }
 
-
+    // Viser alle solgte pizze, mest solgte øverst etc. Minder meget om ovenstående metode,
+    // denne metode tilføjer dog også omæstning pr pizza.
+    //
     public void mostSoldByRevenue() {
         PizzaReader pizzaReader = new PizzaReader();
         ArrayList<Pizza> pizzaMenu = pizzaReader.loadMenu();
@@ -234,6 +238,7 @@ public class Statistics {
 
     }
 
+    // Læser filen accumRevenue og adderer alle værdierne i denne og returnerer denne værdi.
     public double totalRevenue() {
         accumRevenue = new File("accumRevenue.txt");
         double sum = 0.0;

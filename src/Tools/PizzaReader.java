@@ -11,7 +11,7 @@ public class PizzaReader {
     private Scanner fileReader;
     private File pizzaMenu;
 
-
+    // Indlæser PizzaMenuen fra filen PizzaMenu
     public ArrayList<Pizza> loadMenu() {
         ArrayList<Pizza> pizzas = new ArrayList<>();
         pizzaMenu = new File("PizzaMenu");
@@ -30,10 +30,10 @@ public class PizzaReader {
         }
 
         return pizzas;
-
     }
 
-
+    // Leder efter parameter navn i PizzaMenu og returnerer en int, der repræsenterer pizza'ens indeks.
+    // Returnerer -1 hvis pizzaen ikke findes i menuen.
     public int searchForPizza(String name) {
         ArrayList<Pizza> pizzas = loadMenu();
 
@@ -45,7 +45,7 @@ public class PizzaReader {
         return -1;
     }
 
-
+    // Printer pizzamenuen fra filen PizzaMenu
     public void printMenu(){
         ArrayList<Pizza> pizzas = loadMenu();
 
@@ -55,6 +55,5 @@ public class PizzaReader {
             System.out.println(i + ". " + element.toString());
             i++;
         }
-
     }
 }
