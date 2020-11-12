@@ -231,7 +231,7 @@ public class Statistics {
 
         sortAfterNumOfSales(totalPrPizza);
         for (Pizza pizzas : totalPrPizza) {
-            if (pizzas.getNumOfPizza() > 1)
+            if (pizzas.getNumOfPizza() >= 1)
                 System.out.println(String.format("%s x%d: %,.2f,-", pizzas.getName(), pizzas.getNumOfPizza(),
                         pizzas.getNumOfPizza() * pizzas.getPrice()));
         }
